@@ -28,11 +28,11 @@ jobs:
       
       - name: Export Schema
         run: |
-          supabase db dump --db-url "postgresql://${{ secrets.SUPABASE_DB_USER }}:${{ secrets.SUPABASE_DB_PASSWORD }}@${{ secrets.SUPABASE_DB_HOST }}:${{ secrets.SUPABASE_DB_PORT }}/${{ secrets.SUPABASE_DB_NAME }}" --debug > db_schema/schema.sql
+          supabase db dump --db-url "postgresql://postgres.${{ secrets.SUPABASE_PROJECT_ID }}:${{ secrets.SUPABASE_DB_PASSWORD }}@${{ secrets.SUPABASE_DB_HOST }}:${{ secrets.SUPABASE_DB_PORT }}/${{ secrets.SUPABASE_DB_NAME }}" --debug > db_schema/schema.sql || echo "No schema to export yet"
       
       - name: Export Data Samples
         run: |
-          supabase db dump --db-url "postgresql://${{ secrets.SUPABASE_DB_USER }}:${{ secrets.SUPABASE_DB_PASSWORD }}@${{ secrets.SUPABASE_DB_HOST }}:${{ secrets.SUPABASE_DB_PORT }}/${{ secrets.SUPABASE_DB_NAME }}" --data-only --debug > db_schema/data_samples.sql
+          supabase db dump --db-url "postgresql://postgres.${{ secrets.SUPABASE_PROJECT_ID }}:${{ secrets.SUPABASE_DB_PASSWORD }}@${{ secrets.SUPABASE_DB_HOST }}:${{ secrets.SUPABASE_DB_PORT }}/${{ secrets.SUPABASE_DB_NAME }}" --data-only --debug > db_schema/data_samples.sql || echo "No data to export yet"
       
       - name: Commit and Push Updates
         run: |

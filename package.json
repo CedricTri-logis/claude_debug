@@ -1,0 +1,67 @@
+{
+  "name": "claude-debug-infrastructure",
+  "version": "1.0.0",
+  "description": "Complete debugging infrastructure with Sentry and Logflare integration",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "example:api": "node examples/api-example.js",
+    "example:database": "node examples/database-example.js"
+  },
+  "keywords": [
+    "debugging",
+    "logging",
+    "sentry",
+    "logflare",
+    "observability"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sentry/node": "^7.99.0",
+    "@sentry/tracing": "^7.99.0",
+    "pino": "^8.17.2",
+    "dotenv": "^16.4.1",
+    "uuid": "^9.0.1",
+    "axios": "^1.6.5",
+    "pg": "^8.11.3",
+    "@supabase/supabase-js": "^2.39.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "@types/jest": "^29.5.11",
+    "@types/uuid": "^9.0.7",
+    "typescript": "^5.3.3",
+    "jest": "^29.7.0",
+    "@jest/globals": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js",
+      "**/tests/**/*.spec.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "lib/**/*.js",
+      "!**/node_modules/**"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

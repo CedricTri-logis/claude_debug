@@ -22,8 +22,8 @@ async function exportSchema() {
   console.log('======================================');
   console.log('');
 
-  // Create db_schema directory
-  const dbSchemaDir = path.join(process.cwd(), 'db_schema');
+  // Create database directory
+  const dbSchemaDir = path.join(process.cwd(), 'database');
   if (!fs.existsSync(dbSchemaDir)) {
     fs.mkdirSync(dbSchemaDir, { recursive: true });
   }
@@ -151,9 +151,9 @@ async function exportSchema() {
     console.log('======================================');
     console.log('');
     console.log('Files created:');
-    console.log('  - db_schema/schema_documentation.md');
-    console.log('  - db_schema/data_samples.json');
-    console.log('  - db_schema/export_summary.json');
+    console.log('  - database/schema_documentation.md');
+    console.log('  - database/data_samples.json');
+    console.log('  - database/export_summary.json');
     console.log('');
     console.log('Statistics:');
     console.log(`  - Total tables: ${summary.statistics.total_tables}`);

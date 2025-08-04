@@ -17,8 +17,8 @@ else
     exit 1
 fi
 
-# Create db_schema directory if it doesn't exist
-mkdir -p db_schema
+# Create database directory structure if it doesn't exist
+mkdir -p database/schema database/samples database/exports
 
 # Build the connection string with password
 DB_URL=$(echo $DATABASE_URL | sed "s/\${SUPABASE_DB_PASSWORD}/$SUPABASE_DB_PASSWORD/g")
@@ -28,7 +28,7 @@ echo ""
 
 # Export schema
 echo -n "1. Exporting schema... "
-pg_dump "$DB_URL" --schema-only --no-owner --no-privileges > db_schema/schema.sql 2>/dev/null
+pg_dump "$DB_URL" --schema-only --no-owner --no-privileges > database/schema/schema.sql 2>/dev/null
 if [ $? -eq 0 ]; then
     echo "✅"
 else
@@ -37,7 +37,7 @@ fi
 
 # Export data (first 100 rows of each table as samples)
 echo -n "2. Exporting data samples... "
-pg_dump "$DB_URL" --data-only --no-owner --no-privileges > db_schema/data_samples.sql 2>/dev/null
+pg_dump "$DB_URL" --data-only --no-owner --no-privileges > database/samples/data_samples.sql 2>/dev/null
 if [ $? -eq 0 ]; then
     echo "✅"
 else
@@ -52,15 +52,15 @@ SELECT
     n_live_tup as row_count
 FROM pg_stat_user_tables
 ORDER BY schemaname, tablename;
-" > db_schema/table_inventory.txt 2>/dev/null
+" > database/exports/table_inventory.txt 2>/dev/null
 if [ $? -eq 0 ]; then
     echo "✅"
 else
     echo "❌ Failed to create inventory"
 fi
 
-# Create a README for the db_schema directory
-cat > db_schema/README.md << 'EOF'
+# Create a README for the database directory
+cat > database/README.md << 'EOF'
 # Database Schema Export
 
 This directory contains automated exports of the Supabase database schema and data.
@@ -89,8 +89,8 @@ To manually export the database:
 
 To restore the schema to a new database:
 ```bash
-psql [DATABASE_URL] < db_schema/schema.sql
-psql [DATABASE_URL] < db_schema/data_samples.sql
+psql [DATABASE_URL] < database/schema/schema.sql
+psql [DATABASE_URL] < database/samples/data_samples.sql
 ```
 
 ## GitHub Actions Workflow
@@ -99,18 +99,18 @@ The automatic export is handled by `.github/workflows/export-supabase.yml`
 EOF
 
 # Record export timestamp
-echo "Export completed at: $(date)" > db_schema/last_export.txt
+echo "Export completed at: $(date)" > database/exports/last_export.txt
 
 echo ""
 echo "======================================"
 echo "Export Complete!"
 echo "======================================"
 echo ""
-echo "Files created in db_schema/:"
-ls -lh db_schema/
+echo "Files created in database/:"
+ls -lh database/
 echo ""
 echo "To commit these changes:"
-echo "  git add db_schema/"
+echo "  git add database/"
 echo "  git commit -m 'Update database schema export'"
 echo "  git push"
 echo ""

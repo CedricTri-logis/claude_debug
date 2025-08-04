@@ -6,6 +6,23 @@
 
 All specialized sub-agents are defined in `.claude/agents/` directory. Each agent has specific responsibilities and must be used for their designated tasks.
 
+### Task Tool Execution Model
+
+**IMPORTANT**: The Task tool executes subagents **sequentially**, not in parallel:
+- Multiple Task invocations in a single message are queued and processed one at a time
+- Each subagent completes its full workflow before the next begins
+- Typical overhead: 8-10 seconds per subagent initialization
+
+#### Performance Implications:
+- 3 subagent tasks = ~3x execution time (not concurrent)
+- Consider combining related operations into a single subagent invocation
+- Use orchestrator patterns for complex multi-step workflows
+
+#### Best Practices:
+1. **Batch Operations**: Instead of multiple subagents, use one subagent for related tasks
+2. **Orchestrator Pattern**: Create orchestrator agents that coordinate multiple operations internally
+3. **Sequential Planning**: Design workflows acknowledging sequential execution
+
 ## CRITICAL: Code Analysis Enforcement
 
 **⚠️ MANDATORY WORKFLOW ⚠️** for ALL code operations:
@@ -206,9 +223,60 @@ The repo-initializer will:
 - Create GitHub Actions workflow for automatic Supabase exports
 - Validate all connections are working
 
+## Documentation and Organization Delegation
+
+**PROACTIVE**: For ANY documentation, repository structure analysis, or organization tasks, you MUST use the Task tool to delegate to the documentation-orchestrator.
+
+### Documentation Orchestrator
+
+For documentation and organization tasks:
+
+1. Read the full instructions from `.claude/agents/documentation/_main.documentation-orchestrator.md`
+2. Use the Task tool with those instructions plus the specific documentation task
+3. The orchestrator will coordinate between its four specialized sub-agents
+
+### When to Use:
+- Creating or updating repository documentation
+- Analyzing repository structure
+- Reorganizing folder hierarchy
+- Generating or updating PRDs
+- After ANY code changes (automatic PRD update)
+
+### Sub-Agents Coordinated:
+1. **architecture-documenter** - Creates ARCHITECTURE.md with complete repo structure
+2. **repo-organizer** - Restructures repository following depth-over-width principles
+3. **path-validator** - Validates all references after reorganization
+4. **prd-maintainer** - Maintains living PRD that updates with code changes
+
+### Example:
+```
+When asked to document the repository:
+1. Read .claude/agents/documentation/_main.documentation-orchestrator.md for the full instructions
+2. Use: Task(
+     subagent_type="general-purpose",
+     description="Document repository structure",
+     prompt="[Contents of documentation-orchestrator.md] + TASK: [specific documentation request]"
+   )
+```
+
+### Automatic PRD Updates:
+**CRITICAL**: The documentation-orchestrator MUST be automatically invoked after:
+- code-writer completes ANY feature implementation
+- debugger completes ANY bug fix
+- Any significant code changes are made
+
+This ensures the PRD.md stays synchronized with the actual codebase, maintaining living documentation that allows complete application recreation.
+
+The documentation-orchestrator will:
+- Analyze repository structure and create comprehensive documentation
+- Reorganize repositories for better clarity (depth over width)
+- Validate all path changes to prevent broken references
+- Maintain living PRD with incremental updates after code changes
+- Generate documentation that both humans and AI can understand
+
 ---
 
-*Never write code directly. Always delegate code writing to the code-writer sub-agent (which MUST use code-analyzer first), debugging to the debugger sub-agent (which MUST use code-analyzer for context), agent creation to the agent-architect sub-agent, and repository initialization to the repo-initializer sub-agent.*
+*Never write code directly. Always delegate code writing to the code-writer sub-agent (which MUST use code-analyzer first), debugging to the debugger sub-agent (which MUST use code-analyzer for context), agent creation to the agent-architect sub-agent, repository initialization to the repo-initializer sub-agent, and documentation/organization to the documentation-orchestrator.*
 
 ## Code Analysis Integration
 

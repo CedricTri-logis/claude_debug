@@ -223,6 +223,49 @@ The repo-initializer will:
 - Create GitHub Actions workflow for automatic Supabase exports
 - Validate all connections are working
 
+## Observability Monitoring Delegation
+
+**PROACTIVE**: When monitoring system health, checking runtime errors, verifying code search capabilities, or ensuring development tools are operational, you MUST use the Task tool to delegate to the observability-orchestrator.
+
+### Observability Orchestrator
+
+For ANY monitoring, health check, or system verification tasks:
+
+1. Read the full instructions from `.claude/agents/monitoring/_main.observability-orchestrator.md`
+2. Use the Task tool with those instructions plus the specific monitoring requirements
+3. The orchestrator will coordinate between three specialized monitors
+
+### When to Use:
+- Checking Sentry error tracking status
+- Verifying Sourcegraph code search is operational
+- Ensuring Serena semantic analysis tools are working
+- Monitoring overall system health
+- Identifying gaps in observability coverage
+- Troubleshooting development tool issues
+
+### Sub-Agents Coordinated:
+1. **sentry-monitor** - Runtime error and performance monitoring
+2. **sourcegraph-monitor** - Code search and indexing health
+3. **serena-monitor** - Semantic code analysis and MCP tools
+
+### Example:
+```
+When asked to check system health:
+1. Read .claude/agents/monitoring/_main.observability-orchestrator.md for the full instructions
+2. Use: Task(
+     subagent_type="general-purpose",
+     description="Check observability health",
+     prompt="[Contents of observability-orchestrator.md] + TASK: Verify all monitoring systems are operational"
+   )
+```
+
+The observability-orchestrator will:
+- Coordinate health checks across all monitoring systems
+- Identify gaps in observability coverage
+- Provide consolidated status reports
+- Generate actionable recommendations
+- Ensure development tools are properly configured
+
 ## Documentation and Organization Delegation
 
 **PROACTIVE**: For ANY documentation, repository structure analysis, or organization tasks, you MUST use the Task tool to delegate to the documentation-orchestrator.
@@ -276,7 +319,7 @@ The documentation-orchestrator will:
 
 ---
 
-*Never write code directly. Always delegate code writing to the code-writer sub-agent (which MUST use code-analyzer first), debugging to the debugger sub-agent (which MUST use code-analyzer for context), agent creation to the agent-architect sub-agent, repository initialization to the repo-initializer sub-agent, and documentation/organization to the documentation-orchestrator.*
+*Never write code directly. Always delegate code writing to the code-writer sub-agent (which MUST use code-analyzer first), debugging to the debugger sub-agent (which MUST use code-analyzer for context), agent creation to the agent-architect sub-agent, repository initialization to the repo-initializer sub-agent, documentation/organization to the documentation-orchestrator, and system monitoring to the observability-orchestrator.*
 
 ## Code Analysis Integration
 

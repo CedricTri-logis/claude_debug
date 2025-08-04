@@ -1,2 +1,5 @@
 # Local environment variables - DO NOT COMMIT
 .env
+
+# Sentry Config File
+.env.sentry-build-plugin

@@ -7,12 +7,14 @@ A sophisticated Node.js debugging and infrastructure project that implements a c
 ## Quick Start
 
 ### Prerequisites
+
 - Node.js 18+
 - Supabase project (for database)
 - Sentry project (for error tracking)
 - Logflare account (for logging)
 
 ### Installation
+
 ```bash
 # Clone the repository
 git clone <your-repo-url>
@@ -32,24 +34,28 @@ npm start
 ## Features
 
 🤖 **Agent-Based Architecture**
+
 - Specialized sub-agents for different tasks
 - Code writing with mandatory analysis
 - Database operations with safety guardrails
 - Documentation orchestration
 
 🔍 **Production Debugging**
+
 - Sentry error tracking and performance monitoring
 - Logflare structured logging with correlation IDs
 - Automated log correlation and analysis
 - Sourcegraph code search integration
 
 🗄️ **Database Management**
+
 - Supabase PostgreSQL integration
 - Automated schema synchronization
 - Migration system with rollback support
 - Row Level Security (RLS) policies
 
 📊 **Testing Infrastructure**
+
 - Parallel test execution
 - Agent-based test orchestration
 - Database connection testing
@@ -69,26 +75,30 @@ npm start
 │   ├── exports/            # Export artifacts
 │   └── migrations/         # Version-controlled migrations
 ├── src/                     # 💻 Source code
-├── tests/                   # 🧪 Test suites
-├── scripts/                 # 🔧 Utility scripts
-├── utilities/              # 🛠️ Standalone tools
+├── tools/                   # 🛠️ All development and production tools
+│   ├── production/         # 🏗️ Production infrastructure
+│   ├── development/        # 🧪 Development aids
+│   └── testing/            # 🧪 Testing framework
 └── .claude/agents/         # 🤖 Agent system
 ```
 
 ## Core Components
 
 ### Agent System
+
 - **Code Writer**: Production code with logging and error tracking
 - **Debugger**: Log correlation and error analysis
 - **Supabase Architect**: Database operations with safety guardrails
 - **Documentation Orchestrator**: Living documentation maintenance
 
 ### Debugging Infrastructure
+
 - **Sentry Integration**: Error tracking with context and correlation
 - **Logflare Logging**: Structured logs with searchable metadata
 - **Correlation System**: Link errors across services and timeframes
 
 ### Database Layer
+
 - **Migration System**: Version-controlled schema changes
 - **Auto-Export**: GitHub Actions sync schema to repository
 - **Connection Testing**: Validate database connectivity and permissions
@@ -96,6 +106,7 @@ npm start
 ## Usage Examples
 
 ### Running Tests
+
 ```bash
 # Run all tests in parallel
 npm test
@@ -110,6 +121,7 @@ npm run test:orchestrator
 ```
 
 ### Database Operations
+
 ```bash
 # Run migrations
 npm run migrate:up
@@ -118,10 +130,11 @@ npm run migrate:up
 npm run test:connection
 
 # Export schema manually
-./scripts/manual-db-export.sh
+./tools/production/deployment/manual-db-export.sh
 ```
 
 ### Development
+
 ```bash
 # Start development server
 npm run dev
@@ -155,7 +168,7 @@ LOGFLARE_SOURCE_TOKEN=your_source_token
 - **[Architecture Guide](docs/ARCHITECTURE.md)** - System design and components
 - **[Claude Instructions](docs/CLAUDE.md)** - Agent system documentation
 - **[Setup Guide](docs/INITIALIZATION_GUIDE.md)** - Complete setup instructions
-- **[Test Documentation](tests/README.md)** - Testing framework guide
+- **[Test Documentation](tools/testing/README.md)** - Testing framework guide
 
 ## Contributing
 
@@ -171,6 +184,7 @@ ISC
 ## Support
 
 For issues and questions:
+
 - Check the [Architecture Guide](docs/ARCHITECTURE.md)
-- Review [Test Documentation](tests/README.md)
+- Review [Test Documentation](tools/testing/README.md)
 - Create an issue in the repository

@@ -355,7 +355,7 @@ Main Application (src/index.js)
 
 - **Unit Tests**: `/tests/logger.test.js` - Core library testing
 - **Integration Tests**: `/examples/` - API and database integration examples
-- **Migration Tests**: `/scripts/test-products-table.js` - Database operation validation
+- **Migration Tests**: `/dev-scripts/test-products-table.js` - Database operation validation
 - **Test Coverage**: Configured via Jest with coverage reporting to `/coverage/`
 
 ## Build & Deployment

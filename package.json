@@ -16,7 +16,7 @@
     "test:sequential": "node tests/parallel/runner.js --sequential",
     "test:orchestrator": "node tests/parallel/runner.js --orchestrator",
     "test:connection": "node tests/database/connection.test.js",
-    "test:products": "node scripts/test-products-table.js",
+    "test:products": "node dev-scripts/test-products-table.js",
     "test:parallel": "node tests/test-parallel-tasks.js",
     "test:analyze": "node tests/analyze-parallel-results.js",
     "test:jest": "jest",

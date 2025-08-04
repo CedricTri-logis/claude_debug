@@ -3,6 +3,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'database/migrations/**'
+  schedule:
+    # Run daily at 6 AM UTC to catch any database changes
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
 permissions:
   contents: write
 jobs:
@@ -32,7 +39,8 @@ jobs:
       
       - name: Export Data Samples
         run: |
-          supabase db dump --db-url "postgresql://postgres.${{ secrets.SUPABASE_PROJECT_ID }}:${{ secrets.SUPABASE_DB_PASSWORD }}@${{ secrets.SUPABASE_DB_HOST }}:${{ secrets.SUPABASE_DB_PORT }}/${{ secrets.SUPABASE_DB_NAME }}" --data-only --debug > database/samples/data_samples.sql || echo "No data to export yet"
+          # Export ALL data including custom tables in public schema
+          supabase db dump --db-url "postgresql://postgres.${{ secrets.SUPABASE_PROJECT_ID }}:${{ secrets.SUPABASE_DB_PASSWORD }}@${{ secrets.SUPABASE_DB_HOST }}:${{ secrets.SUPABASE_DB_PORT }}/${{ secrets.SUPABASE_DB_NAME }}" --data-only --schema public --debug > database/samples/data_samples.sql || echo "No data to export yet"
       
       - name: Commit and Push Updates
         run: |

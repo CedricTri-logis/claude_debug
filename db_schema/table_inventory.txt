@@ -1,0 +1,497 @@
+# Database Table Inventory
+
+**Generated:** 2025-08-04T07:09:34.891Z
+**Database:** https://puuvroqufbfnngxpfymq.supabase.co
+**Total Tables:** 27
+
+## Tables
+
+### auth.audit_log_entries
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| instance_id | uuid | Yes |  |
+| id | uuid | No |  |
+| payload | json | Yes |  |
+| created_at | timestamp with time zone | Yes |  |
+| ip_address | character varying(64) | No | ''::character varying |
+
+### auth.flow_state
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No |  |
+| user_id | uuid | Yes |  |
+| auth_code | text | No |  |
+| code_challenge_method | USER-DEFINED | No |  |
+| code_challenge | text | No |  |
+| provider_type | text | No |  |
+| provider_access_token | text | Yes |  |
+| provider_refresh_token | text | Yes |  |
+| created_at | timestamp with time zone | Yes |  |
+| updated_at | timestamp with time zone | Yes |  |
+| authentication_method | text | No |  |
+| auth_code_issued_at | timestamp with time zone | Yes |  |
+
+### auth.identities
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| provider_id | text | No |  |
+| user_id | uuid | No |  |
+| identity_data | jsonb | No |  |
+| provider | text | No |  |
+| last_sign_in_at | timestamp with time zone | Yes |  |
+| created_at | timestamp with time zone | Yes |  |
+| updated_at | timestamp with time zone | Yes |  |
+| email | text | Yes |  |
+| id | uuid | No | gen_random_uuid() |
+
+### auth.instances
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No |  |
+| uuid | uuid | Yes |  |
+| raw_base_config | text | Yes |  |
+| created_at | timestamp with time zone | Yes |  |
+| updated_at | timestamp with time zone | Yes |  |
+
+### auth.mfa_amr_claims
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| session_id | uuid | No |  |
+| created_at | timestamp with time zone | No |  |
+| updated_at | timestamp with time zone | No |  |
+| authentication_method | text | No |  |
+| id | uuid | No |  |
+
+### auth.mfa_challenges
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No |  |
+| factor_id | uuid | No |  |
+| created_at | timestamp with time zone | No |  |
+| verified_at | timestamp with time zone | Yes |  |
+| ip_address | inet | No |  |
+| otp_code | text | Yes |  |
+| web_authn_session_data | jsonb | Yes |  |
+
+### auth.mfa_factors
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No |  |
+| user_id | uuid | No |  |
+| friendly_name | text | Yes |  |
+| factor_type | USER-DEFINED | No |  |
+| status | USER-DEFINED | No |  |
+| created_at | timestamp with time zone | No |  |
+| updated_at | timestamp with time zone | No |  |
+| secret | text | Yes |  |
+| phone | text | Yes |  |
+| last_challenged_at | timestamp with time zone | Yes |  |
+| web_authn_credential | jsonb | Yes |  |
+| web_authn_aaguid | uuid | Yes |  |
+
+### auth.one_time_tokens
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No |  |
+| user_id | uuid | No |  |
+| token_type | USER-DEFINED | No |  |
+| token_hash | text | No |  |
+| relates_to | text | No |  |
+| created_at | timestamp without time zone | No | now() |
+| updated_at | timestamp without time zone | No | now() |
+
+### auth.refresh_tokens
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| instance_id | uuid | Yes |  |
+| id | bigint(64,0) | No | nextval('auth.refresh_tokens_id_seq'::regclass) |
+| token | character varying(255) | Yes |  |
+| user_id | character varying(255) | Yes |  |
+| revoked | boolean | Yes |  |
+| created_at | timestamp with time zone | Yes |  |
+| updated_at | timestamp with time zone | Yes |  |
+| parent | character varying(255) | Yes |  |
+| session_id | uuid | Yes |  |
+
+### auth.saml_providers
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No |  |
+| sso_provider_id | uuid | No |  |
+| entity_id | text | No |  |
+| metadata_xml | text | No |  |
+| metadata_url | text | Yes |  |
+| attribute_mapping | jsonb | Yes |  |
+| created_at | timestamp with time zone | Yes |  |
+| updated_at | timestamp with time zone | Yes |  |
+| name_id_format | text | Yes |  |
+
+### auth.saml_relay_states
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No |  |
+| sso_provider_id | uuid | No |  |
+| request_id | text | No |  |
+| for_email | text | Yes |  |
+| redirect_to | text | Yes |  |
+| created_at | timestamp with time zone | Yes |  |
+| updated_at | timestamp with time zone | Yes |  |
+| flow_state_id | uuid | Yes |  |
+
+### auth.schema_migrations
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| version | character varying(255) | No |  |
+
+### auth.sessions
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No |  |
+| user_id | uuid | No |  |
+| created_at | timestamp with time zone | Yes |  |
+| updated_at | timestamp with time zone | Yes |  |
+| factor_id | uuid | Yes |  |
+| aal | USER-DEFINED | Yes |  |
+| not_after | timestamp with time zone | Yes |  |
+| refreshed_at | timestamp without time zone | Yes |  |
+| user_agent | text | Yes |  |
+| ip | inet | Yes |  |
+| tag | text | Yes |  |
+
+### auth.sso_domains
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No |  |
+| sso_provider_id | uuid | No |  |
+| domain | text | No |  |
+| created_at | timestamp with time zone | Yes |  |
+| updated_at | timestamp with time zone | Yes |  |
+
+### auth.sso_providers
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No |  |
+| resource_id | text | Yes |  |
+| created_at | timestamp with time zone | Yes |  |
+| updated_at | timestamp with time zone | Yes |  |
+
+### auth.users
+
+- **Owner:** supabase_auth_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| instance_id | uuid | Yes |  |
+| id | uuid | No |  |
+| aud | character varying(255) | Yes |  |
+| role | character varying(255) | Yes |  |
+| email | character varying(255) | Yes |  |
+| encrypted_password | character varying(255) | Yes |  |
+| email_confirmed_at | timestamp with time zone | Yes |  |
+| invited_at | timestamp with time zone | Yes |  |
+| confirmation_token | character varying(255) | Yes |  |
+| confirmation_sent_at | timestamp with time zone | Yes |  |
+| recovery_token | character varying(255) | Yes |  |
+| recovery_sent_at | timestamp with time zone | Yes |  |
+| email_change_token_new | character varying(255) | Yes |  |
+| email_change | character varying(255) | Yes |  |
+| email_change_sent_at | timestamp with time zone | Yes |  |
+| last_sign_in_at | timestamp with time zone | Yes |  |
+| raw_app_meta_data | jsonb | Yes |  |
+| raw_user_meta_data | jsonb | Yes |  |
+| is_super_admin | boolean | Yes |  |
+| created_at | timestamp with time zone | Yes |  |
+| updated_at | timestamp with time zone | Yes |  |
+| phone | text | Yes | NULL::character varying |
+| phone_confirmed_at | timestamp with time zone | Yes |  |
+| phone_change | text | Yes | ''::character varying |
+| phone_change_token | character varying(255) | Yes | ''::character varying |
+| phone_change_sent_at | timestamp with time zone | Yes |  |
+| confirmed_at | timestamp with time zone | Yes |  |
+| email_change_token_current | character varying(255) | Yes | ''::character varying |
+| email_change_confirm_status | smallint(16,0) | Yes | 0 |
+| banned_until | timestamp with time zone | Yes |  |
+| reauthentication_token | character varying(255) | Yes | ''::character varying |
+| reauthentication_sent_at | timestamp with time zone | Yes |  |
+| is_sso_user | boolean | No | false |
+| deleted_at | timestamp with time zone | Yes |  |
+| is_anonymous | boolean | No | false |
+
+### realtime.messages
+
+- **Owner:** supabase_realtime_admin
+- **Features:** Indexes, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| topic | text | No |  |
+| extension | text | No |  |
+| payload | jsonb | Yes |  |
+| event | text | Yes |  |
+| private | boolean | Yes | false |
+| updated_at | timestamp without time zone | No | now() |
+| inserted_at | timestamp without time zone | No | now() |
+| id | uuid | No | gen_random_uuid() |
+
+### realtime.schema_migrations
+
+- **Owner:** supabase_admin
+- **Features:** Indexes
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| version | bigint(64,0) | No |  |
+| inserted_at | timestamp without time zone | Yes |  |
+
+### realtime.subscription
+
+- **Owner:** supabase_admin
+- **Features:** Indexes, Triggers
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | bigint(64,0) | No |  |
+| subscription_id | uuid | No |  |
+| entity | regclass | No |  |
+| filters | ARRAY | No | '{}'::realtime.user_defined_filter[] |
+| claims | jsonb | No |  |
+| claims_role | regrole | No |  |
+| created_at | timestamp without time zone | No | timezone('utc'::text, now()) |
+
+### storage.buckets
+
+- **Owner:** supabase_storage_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | text | No |  |
+| name | text | No |  |
+| owner | uuid | Yes |  |
+| created_at | timestamp with time zone | Yes | now() |
+| updated_at | timestamp with time zone | Yes | now() |
+| public | boolean | Yes | false |
+| avif_autodetection | boolean | Yes | false |
+| file_size_limit | bigint(64,0) | Yes |  |
+| allowed_mime_types | ARRAY | Yes |  |
+| owner_id | text | Yes |  |
+
+### storage.migrations
+
+- **Owner:** supabase_storage_admin
+- **Features:** Indexes, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | integer(32,0) | No |  |
+| name | character varying(100) | No |  |
+| hash | character varying(40) | No |  |
+| executed_at | timestamp without time zone | Yes | CURRENT_TIMESTAMP |
+
+### storage.objects
+
+- **Owner:** supabase_storage_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No | gen_random_uuid() |
+| bucket_id | text | Yes |  |
+| name | text | Yes |  |
+| owner | uuid | Yes |  |
+| created_at | timestamp with time zone | Yes | now() |
+| updated_at | timestamp with time zone | Yes | now() |
+| last_accessed_at | timestamp with time zone | Yes | now() |
+| metadata | jsonb | Yes |  |
+| path_tokens | ARRAY | Yes |  |
+| version | text | Yes |  |
+| owner_id | text | Yes |  |
+| user_metadata | jsonb | Yes |  |
+
+### storage.s3_multipart_uploads
+
+- **Owner:** supabase_storage_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | text | No |  |
+| in_progress_size | bigint(64,0) | No | 0 |
+| upload_signature | text | No |  |
+| bucket_id | text | No |  |
+| key | text | No |  |
+| version | text | No |  |
+| owner_id | text | Yes |  |
+| created_at | timestamp with time zone | No | now() |
+| user_metadata | jsonb | Yes |  |
+
+### storage.s3_multipart_uploads_parts
+
+- **Owner:** supabase_storage_admin
+- **Features:** Indexes, Triggers, Row Level Security
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No | gen_random_uuid() |
+| upload_id | text | No |  |
+| size | bigint(64,0) | No | 0 |
+| part_number | integer(32,0) | No |  |
+| bucket_id | text | No |  |
+| key | text | No |  |
+| etag | text | No |  |
+| owner_id | text | Yes |  |
+| version | text | No |  |
+| created_at | timestamp with time zone | No | now() |
+
+### supabase_migrations.schema_migrations
+
+- **Owner:** postgres
+- **Features:** Indexes
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| version | text | No |  |
+| statements | ARRAY | Yes |  |
+| name | text | Yes |  |
+
+### supabase_migrations.seed_files
+
+- **Owner:** postgres
+- **Features:** Indexes
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| path | text | No |  |
+| hash | text | No |  |
+
+### vault.secrets
+
+- **Owner:** supabase_admin
+- **Features:** Indexes
+
+**Columns:**
+
+| Column | Type | Nullable | Default |
+|--------|------|----------|----------|
+| id | uuid | No | gen_random_uuid() |
+| name | text | Yes |  |
+| description | text | No | ''::text |
+| secret | text | No |  |
+| key_id | uuid | Yes |  |
+| nonce | bytea | Yes | vault._crypto_aead_det_noncegen() |
+| created_at | timestamp with time zone | No | CURRENT_TIMESTAMP |
+| updated_at | timestamp with time zone | No | CURRENT_TIMESTAMP |
+

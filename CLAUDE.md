@@ -6,17 +6,44 @@
 
 All specialized sub-agents are defined in `.claude/agents/` directory. Each agent has specific responsibilities and must be used for their designated tasks.
 
+## CRITICAL: Code Analysis Enforcement
+
+**⚠️ MANDATORY WORKFLOW ⚠️** for ALL code operations:
+
+### 1. Code Creation (ENFORCED):
+- **MUST use code-analyzer FIRST** - NO EXCEPTIONS
+- **MUST document Sourcegraph/Serena results** in code comments
+- **MUST justify** if creating new code vs reusing existing
+- **ABORT if duplicates found** unless analyzer approves creation
+
+### 2. Code Modification (ENFORCED):
+- **MUST analyze existing patterns** before changes
+- **MUST maintain consistency** with codebase patterns
+- **MUST update all related code** if pattern changes
+
+### 3. Debugging (ENFORCED):
+- **MUST use code-analyzer** to understand structure
+- **MUST check for similar bugs** across codebase
+- **MUST apply fixes consistently** to all occurrences
+
+**FAILURE TO FOLLOW = CRITICAL ERROR**
+- System will BLOCK code creation without analysis
+- Violations will be logged and reported
+- Code without analysis documentation will be rejected
+
 ## Code Writing Delegation
 
 **MANDATORY**: When writing new code, implementing features, or refactoring existing code, you MUST use the Task tool to delegate to a specialized sub-agent.
 
-### Code Writer Sub-Agent
+### Code Writer Sub-Agent (WITH MANDATORY ANALYSIS)
 
 For ANY code creation task:
 
 1. Read the full instructions from `.claude/agents/development/_main.code-writer.md`
-2. Use the Task tool with those instructions plus the specific task
-3. Let the sub-agent handle all code generation
+2. **NOTE**: Code-writer MUST use code-analyzer before writing ANY code
+3. Use the Task tool with those instructions plus the specific task
+4. Let the sub-agent handle all code generation WITH analysis
+5. **VERIFY** analysis was performed by checking for documentation comments
 
 ### Example:
 ```
@@ -102,6 +129,45 @@ The agent-architect will:
 - Create complete agent file with YAML and instructions
 - Validate and test the new agent
 
+## Specialized High-Permission Agents Delegation
+
+**⚠️ WARNING**: These agents have dangerous permissions and implement strict guardrails. They will ALWAYS ask for confirmation before destructive operations.
+
+### Supabase Database Architect Sub-Agent
+
+For ANY database schema operations, migrations, or Supabase-specific tasks:
+
+1. Read the full instructions from `.claude/agents/specialized/_main.supabase-architect.md`
+2. Use the Task tool with those instructions plus the specific database task
+3. The agent will categorize operation risk and require appropriate confirmation
+
+### When to Use:
+- Creating, modifying, or dropping database tables
+- Managing indexes, views, or functions
+- Setting up Row Level Security (RLS) policies
+- Performing data migrations or bulk operations
+- Optimizing database performance
+- Any SQL DDL or DML operations on Supabase
+
+### Example:
+```
+When asked to modify database schema:
+1. Read .claude/agents/specialized/_main.supabase-architect.md for the full instructions
+2. Use: Task(
+     subagent_type="general-purpose",
+     description="Database schema operation",
+     prompt="[Contents of supabase-architect.md] + TASK: [specific database operation]"
+   )
+```
+
+The supabase-architect will:
+- Assess operation risk level (SAFE/MODERATE/DANGEROUS/CRITICAL)
+- Verify backup status before dangerous operations
+- Generate migration files with rollback scripts
+- Require explicit confirmation for destructive operations
+- Log all operations for audit trail
+- Prevent SQL injection and validate syntax
+
 ## Repository Initialization Delegation
 
 **PROACTIVE**: When detecting a new repository or when asked to set up GitHub, Supabase, or Sourcegraph connections, you MUST use the Task tool to delegate to the repo-initializer agent.
@@ -142,4 +208,13 @@ The repo-initializer will:
 
 ---
 
-*Never write code directly. Always delegate code writing to the code-writer sub-agent, debugging to the debugger sub-agent, agent creation to the agent-architect sub-agent, and repository initialization to the repo-initializer sub-agent.*
+*Never write code directly. Always delegate code writing to the code-writer sub-agent (which MUST use code-analyzer first), debugging to the debugger sub-agent (which MUST use code-analyzer for context), agent creation to the agent-architect sub-agent, and repository initialization to the repo-initializer sub-agent.*
+
+## Code Analysis Integration
+
+**The code-analyzer agent is the MANDATORY gatekeeper for all code operations:**
+- Located at: `.claude/agents/development/code-analyzer.md`
+- Uses Sourcegraph API via `lib/sourcegraph.js`
+- Uses mcp__serena tools for semantic analysis
+- Returns structured analysis with REUSE/EXTEND/CREATE_NEW recommendations
+- code-writer and debugger agents MUST use it before operations

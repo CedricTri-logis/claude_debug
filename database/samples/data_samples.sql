@@ -20,6 +20,24 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Data for Name: counter_sessions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: counter_operations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: counter_snapshots; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
 -- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -44,6 +62,14 @@ INSERT INTO "public"."products" ("id", "name", "description", "price", "stock_qu
 	('e5644e89-5ece-4a4f-80c3-00e51a906f9e', 'Smartphone Case', 'Protective smartphone case with drop protection', 24.99, 200, '2025-08-04 08:38:36.231052+00', '2025-08-04 08:38:36.231052+00'),
 	('7840d60d-2d71-44ce-ab7b-b1e973be541f', 'Portable Charger', '10000mAh portable battery pack with fast charging', 49.99, 85, '2025-08-04 08:38:36.231052+00', '2025-08-04 08:38:36.231052+00'),
 	('faeb9ac1-bf41-431e-893e-612089ddb69c', 'Cable Organizer', 'Desk cable management system with multiple slots', 19.99, 120, '2025-08-04 08:38:36.231052+00', '2025-08-04 08:38:36.231052+00');
+
+
+--
+-- Data for Name: simple_counter; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."simple_counter" ("id", "amount") VALUES
+	(1, 2);
 
 
 --

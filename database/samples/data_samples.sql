@@ -69,7 +69,7 @@ INSERT INTO "public"."products" ("id", "name", "description", "price", "stock_qu
 --
 
 INSERT INTO "public"."simple_counter" ("id", "amount") VALUES
-	(1, 2);
+	(1, 779);
 
 
 --
